@@ -12,7 +12,7 @@ import {
   BigDecimal
 } from "@graphprotocol/graph-ts";
 
-export class MasterChef extends Entity {
+export class SakeMaster extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -20,17 +20,17 @@ export class MasterChef extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save MasterChef entity without an ID");
+    assert(id !== null, "Cannot save SakeMaster entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save MasterChef entity with non-string ID. " +
+      "Cannot save SakeMaster entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("MasterChef", id.toString(), this);
+    store.set("SakeMaster", id.toString(), this);
   }
 
-  static load(id: string): MasterChef | null {
-    return store.get("MasterChef", id) as MasterChef | null;
+  static load(id: string): SakeMaster | null {
+    return store.get("SakeMaster", id) as SakeMaster | null;
   }
 
   get id(): string {
@@ -52,7 +52,7 @@ export class MasterChef extends Entity {
   }
 }
 
-export class MasterChefPool extends Entity {
+export class SakeMasterPool extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -60,17 +60,17 @@ export class MasterChefPool extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save MasterChefPool entity without an ID");
+    assert(id !== null, "Cannot save SakeMasterPool entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save MasterChefPool entity with non-string ID. " +
+      "Cannot save SakeMasterPool entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("MasterChefPool", id.toString(), this);
+    store.set("SakeMasterPool", id.toString(), this);
   }
 
-  static load(id: string): MasterChefPool | null {
-    return store.get("MasterChefPool", id) as MasterChefPool | null;
+  static load(id: string): SakeMasterPool | null {
+    return store.get("SakeMasterPool", id) as SakeMasterPool | null;
   }
 
   get id(): string {
@@ -146,7 +146,7 @@ export class MasterChefPool extends Entity {
   }
 }
 
-export class MasterChefPoolData extends Entity {
+export class SakeMasterPoolData extends Entity {
   constructor(id: string) {
     super();
     this.set("id", Value.fromString(id));
@@ -154,17 +154,17 @@ export class MasterChefPoolData extends Entity {
 
   save(): void {
     let id = this.get("id");
-    assert(id !== null, "Cannot save MasterChefPoolData entity without an ID");
+    assert(id !== null, "Cannot save SakeMasterPoolData entity without an ID");
     assert(
       id.kind == ValueKind.STRING,
-      "Cannot save MasterChefPoolData entity with non-string ID. " +
+      "Cannot save SakeMasterPoolData entity with non-string ID. " +
         'Considering using .toHex() to convert the "id" to a string.'
     );
-    store.set("MasterChefPoolData", id.toString(), this);
+    store.set("SakeMasterPoolData", id.toString(), this);
   }
 
-  static load(id: string): MasterChefPoolData | null {
-    return store.get("MasterChefPoolData", id) as MasterChefPoolData | null;
+  static load(id: string): SakeMasterPoolData | null {
+    return store.get("SakeMasterPoolData", id) as SakeMasterPoolData | null;
   }
 
   get id(): string {

@@ -1,6 +1,6 @@
 import { BigInt } from "@graphprotocol/graph-ts";
 import {
-  MasterChef,
+  SakeMaster,
   Deposit,
   EmergencyWithdraw,
   OwnershipTransferred,
@@ -8,11 +8,11 @@ import {
   AddCall,
   SetCall,
   MigrateCall,
-} from "../generated/MasterChef/MasterChef";
+} from "../generated/SakeMaster/SakeMaster";
 import {
-  MasterChef as MasterChefEntity,
-  MasterChefPool,
-  MasterChefPoolData,
+  SakeMaster as MasterChefEntity,
+  SakeMasterPool,
+  SakeMasterPoolData,
 } from "../generated/schema";
 
 // Exchange identifiers. Integers to save space in historical data.
@@ -23,39 +23,39 @@ const EXCHANGE_SUSHISWAP = 1;
 const dataInterval = 60 * 15;
 
 export function handleDeposit(event: Deposit): void {
-  let pool = MasterChefPool.load(event.params.pid.toString());
+  let pool = SakeMasterPool.load(event.params.pid.toString());
   pool.balance = pool.balance.plus(event.params.amount);
   pool.save();
 
-  updatePoolData(pool as MasterChefPool, event.block.timestamp.toI32());
+  updatePoolData(pool as SakeMasterPool, event.block.timestamp.toI32());
 }
 
 export function handleEmergencyWithdraw(event: EmergencyWithdraw): void {
-  let pool = MasterChefPool.load(event.params.pid.toString());
+  let pool = SakeMasterPool.load(event.params.pid.toString());
   pool.balance = pool.balance.minus(event.params.amount);
   pool.save();
 
-  updatePoolData(pool as MasterChefPool, event.block.timestamp.toI32());
+  updatePoolData(pool as SakeMasterPool, event.block.timestamp.toI32());
 }
 
 export function handleOwnershipTransferred(event: OwnershipTransferred): void {}
 
 export function handleWithdraw(event: Withdraw): void {
-  let pool = MasterChefPool.load(event.params.pid.toString());
+  let pool = SakeMasterPool.load(event.params.pid.toString());
   pool.balance = pool.balance.minus(event.params.amount);
   pool.save();
 
-  updatePoolData(pool as MasterChefPool, event.block.timestamp.toI32());
+  updatePoolData(pool as SakeMasterPool, event.block.timestamp.toI32());
 }
 
 export function handleAddPool(event: AddCall): void {
-  let masterChef = MasterChef.bind(event.to);
+  let masterChef = SakeMaster.bind(event.to);
 
   let poolId = masterChef.poolLength().minus(BigInt.fromI32(1));
   let poolInfo = masterChef.poolInfo(poolId);
 
   // Add pool.
-  let pool = new MasterChefPool(poolId.toString());
+  let pool = new SakeMasterPool(poolId.toString());
   pool.balance = BigInt.fromI32(0);
   pool.lpToken = poolInfo.value0;
   pool.allocPoint = poolInfo.value1;
@@ -74,7 +74,7 @@ export function handleAddPool(event: AddCall): void {
 }
 
 export function handleSetPoolAllocPoint(event: SetCall): void {
-  let pool = MasterChefPool.load(event.inputs._pid.toString());
+  let pool = SakeMasterPool.load(event.inputs._pid.toString());
 
   // Update MasterChefEntity.
   let masterChefEntity = getMasterChefEntity();
@@ -89,23 +89,23 @@ export function handleSetPoolAllocPoint(event: SetCall): void {
 }
 
 export function handleMigrate(event: MigrateCall): void {
-  let masterChef = MasterChef.bind(event.to);
+  let masterChef = SakeMaster.bind(event.to);
 
-  let pool = MasterChefPool.load(event.inputs._pid.toString());
+  let pool = SakeMasterPool.load(event.inputs._pid.toString());
   pool.lpToken = masterChef.poolInfo(event.inputs._pid).value0;
   pool.exchange = EXCHANGE_SUSHISWAP;
   pool.save();
 
-  updatePoolData(pool as MasterChefPool, event.block.timestamp.toI32());
+  updatePoolData(pool as SakeMasterPool, event.block.timestamp.toI32());
 }
 
-function updatePoolData(pool: MasterChefPool, timestamp: i32): void {
+function updatePoolData(pool: SakeMasterPool, timestamp: i32): void {
   let quarterHourIndex = (timestamp / dataInterval) * dataInterval;
   let poolDataId = pool.id + "-" + quarterHourIndex.toString();
-  let poolData = MasterChefPoolData.load(poolDataId);
+  let poolData = SakeMasterPoolData.load(poolDataId);
 
   if (poolData === null) {
-    poolData = new MasterChefPoolData(poolDataId);
+    poolData = new SakeMasterPoolData(poolDataId);
     poolData.pool = pool.id;
     poolData.timestamp = timestamp;
   }
