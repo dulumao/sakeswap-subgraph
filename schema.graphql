@@ -1,0 +1,24 @@
+type SakeMaster @entity {
+  id: ID!
+  totalAllocPoint: BigInt!
+}
+
+type SakeMasterPool @entity {
+  id: ID!
+  balance: BigInt!
+  lpToken: Bytes!
+  allocPoint: BigInt!
+  lastRewardBlock: BigInt!
+  accSushiPerShare: BigInt!
+  exchange: Int! # 0: Uniswap, 1: SakeSwap
+  addedAt: Int!
+}
+
+type SakeMasterPoolData @entity {
+  id: ID!
+  pool: SakeMasterPool!
+  timestamp: Int!
+  balance: BigInt!
+  allocShare: BigInt!
+  exchange: Int! # 0: Uniswap, 1: SakeSwap
+}
