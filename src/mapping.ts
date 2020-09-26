@@ -60,7 +60,7 @@ export function handleAddPool(event: AddCall): void {
   pool.lpToken = poolInfo.value0;
   pool.allocPoint = poolInfo.value1;
   pool.lastRewardBlock = poolInfo.value2;
-  pool.accSushiPerShare = poolInfo.value3;
+  pool.accSakePerShare = poolInfo.value3;
   pool.exchange = EXCHANGE_UNISWAP;
   pool.addedAt = event.block.timestamp.toI32();
   pool.save();

@@ -118,13 +118,13 @@ export class SakeMasterPool extends Entity {
     this.set("lastRewardBlock", Value.fromBigInt(value));
   }
 
-  get accSushiPerShare(): BigInt {
-    let value = this.get("accSushiPerShare");
+  get accSakePerShare(): BigInt {
+    let value = this.get("accSakePerShare");
     return value.toBigInt();
   }
 
-  set accSushiPerShare(value: BigInt) {
-    this.set("accSushiPerShare", Value.fromBigInt(value));
+  set accSakePerShare(value: BigInt) {
+    this.set("accSakePerShare", Value.fromBigInt(value));
   }
 
   get exchange(): i32 {
@@ -219,5 +219,144 @@ export class SakeMasterPoolData extends Entity {
 
   set exchange(value: i32) {
     this.set("exchange", Value.fromI32(value));
+  }
+}
+
+export class uniswapDayData extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save uniswapDayData entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save uniswapDayData entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("uniswapDayData", id.toString(), this);
+  }
+
+  static load(id: string): uniswapDayData | null {
+    return store.get("uniswapDayData", id) as uniswapDayData | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get date(): i32 {
+    let value = this.get("date");
+    return value.toI32();
+  }
+
+  set date(value: i32) {
+    this.set("date", Value.fromI32(value));
+  }
+
+  get dailyVolumeInETH(): BigDecimal {
+    let value = this.get("dailyVolumeInETH");
+    return value.toBigDecimal();
+  }
+
+  set dailyVolumeInETH(value: BigDecimal) {
+    this.set("dailyVolumeInETH", Value.fromBigDecimal(value));
+  }
+
+  get dailyVolumeInUSD(): BigDecimal {
+    let value = this.get("dailyVolumeInUSD");
+    return value.toBigDecimal();
+  }
+
+  set dailyVolumeInUSD(value: BigDecimal) {
+    this.set("dailyVolumeInUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalVolumeInEth(): BigDecimal {
+    let value = this.get("totalVolumeInEth");
+    return value.toBigDecimal();
+  }
+
+  set totalVolumeInEth(value: BigDecimal) {
+    this.set("totalVolumeInEth", Value.fromBigDecimal(value));
+  }
+
+  get totalLiquidityInEth(): BigDecimal {
+    let value = this.get("totalLiquidityInEth");
+    return value.toBigDecimal();
+  }
+
+  set totalLiquidityInEth(value: BigDecimal) {
+    this.set("totalLiquidityInEth", Value.fromBigDecimal(value));
+  }
+
+  get totalVolumeUSD(): BigDecimal {
+    let value = this.get("totalVolumeUSD");
+    return value.toBigDecimal();
+  }
+
+  set totalVolumeUSD(value: BigDecimal) {
+    this.set("totalVolumeUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalLiquidityUSD(): BigDecimal {
+    let value = this.get("totalLiquidityUSD");
+    return value.toBigDecimal();
+  }
+
+  set totalLiquidityUSD(value: BigDecimal) {
+    this.set("totalLiquidityUSD", Value.fromBigDecimal(value));
+  }
+
+  get totalTokenSells(): BigInt {
+    let value = this.get("totalTokenSells");
+    return value.toBigInt();
+  }
+
+  set totalTokenSells(value: BigInt) {
+    this.set("totalTokenSells", Value.fromBigInt(value));
+  }
+
+  get totalTokenBuys(): BigInt {
+    let value = this.get("totalTokenBuys");
+    return value.toBigInt();
+  }
+
+  set totalTokenBuys(value: BigInt) {
+    this.set("totalTokenBuys", Value.fromBigInt(value));
+  }
+
+  get totalAddLiquidity(): BigInt {
+    let value = this.get("totalAddLiquidity");
+    return value.toBigInt();
+  }
+
+  set totalAddLiquidity(value: BigInt) {
+    this.set("totalAddLiquidity", Value.fromBigInt(value));
+  }
+
+  get totalRemoveLiquidity(): BigInt {
+    let value = this.get("totalRemoveLiquidity");
+    return value.toBigInt();
+  }
+
+  set totalRemoveLiquidity(value: BigInt) {
+    this.set("totalRemoveLiquidity", Value.fromBigInt(value));
+  }
+
+  get txCount(): BigInt {
+    let value = this.get("txCount");
+    return value.toBigInt();
+  }
+
+  set txCount(value: BigInt) {
+    this.set("txCount", Value.fromBigInt(value));
   }
 }
